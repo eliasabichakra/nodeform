@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./build/css/demo.css">
+    <link rel="stylesheet" href="./build/css/intlTelInput.css">
+    <link rel="stylesheet" href="./mobile.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1/firebase-firestore.js"></script>
+    <!-- Google reCAPTCHA Enterprise -->
+    <script
+        src="https://www.google.com/recaptcha/enterprise.js?render=6LcOcQgqAAAAAEDLJ_AWQ7zBRYt_DokVn_SzBbq0"></script>
+    <style>
+        .container {
+            display: flex;
+            /* Use flexbox to arrange children */
+            position: relative;
+            /* Ensure relative positioning */
+            width: 100%;
+            height: 700px;
+
+            background-image: url('./OASISbackground.jpg');
+            background-size: 100% 100%;
+            background-position: center -10px;
+            border-radius: 30px;
+            background-attachment: fixed;
+        }
+
+        .content {
+            flex: 1;
+            position: relative;
+            left: 10%;
+            top: 15%;
+            color: #FFFFFF;
+            font-family: "Open Sans", Sans-serif;
+            font-size: 1.2em;
+            font-weight: 500;
+            line-height: 1.4em;
+            padding-right: 20%;
+        }
+
+
+        .form {
+            flex: 0.7;
+            position: relative;
+            padding-left: 20px;
+            padding-top: 200px;
+            margin-right: 200px;
+        }
+
+        .form input[type="text"] {
+            border-radius: 20px;
+            padding: 10px;
+            border: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            width: 100%;
+            height: 40px;
+        }
+
+        .image {
+            z-index: 0;
+        }
+
+
+        .image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .text {
+            color: #FFFFFF;
+            font-family: "Open Sans", Sans-serif;
+            font-size: 1.2em;
+            font-weight: 500;
+            line-height: 1.3em;
+        }
+
+        .in4 {
+            border-radius: 20px;
+            padding: 10px;
+            border: none;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            width: 100%;
+            height: 40px;
+        }
+
+        .in2 {
+            border-radius: 20px;
+            padding: 10px;
+            border: none;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            width: 100%;
+            height: 40px;
+        }
+
+        .in3 {
+            border-radius: 20px;
+            padding: 10px;
+            border: none;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            width: 200%;
+            height: 40px;
+        }
+
+        .submit {
+            background-color: #24B7E8;
+            border-radius: 30px;
+            border: 1px solid #24B7E8;
+            width: 100%;
+            height: 40px;
+            transition: transform 0.5s ease;
+            /* Slower transition for transform */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+        }
+
+        .submit:hover {
+            transform: scale(1.1);
+            /* Scale up by 10% on hover */
+            background-color: #24B7E8;
+        }
+
+        .image-oasis {
+            height: auto;
+            max-width: 10%;
+            border: none;
+            -webkit-border-radius: 0;
+            border-radius: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            margin-left: 150px;
+            margin-top: -20px;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                display: block;
+            }
+
+            .form {
+                margin: auto;
+                margin-right: 20px;
+                padding-top: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./oasis.png" alt="" class="image-oasis">
+    <div class="container">
+        <div class="image"></div>
+        <div class="content">
+            <p>Ultra luxury waterfront master community in Dubai with 4 and 5<br> bedroom stand-alone villas</p>
+            <h1 class="head">THE OASIS BY EMAAR</h1>
+            <p class="text">
+                The Oasis offers the ultimate living experience in a private, luxury
+                resort-like setting amidst lush greenery, flowing waterways, and world
+                -class amenities perfect for both relaxation and entertainment.
+                The mansions and villas are masterpieces designed by the world’s best
+                architects, with interiors created by the most famous designers.
+                The unobstructed, open spaces seamlessly flow from indoors to outdoors,
+                allowing residents to make the most of Dubai’s sun-filled days.
+            </p>
+        </div>
+        <form class="form" id="leadForm" onsubmit="handleSubmit(event)">
+            <div>
+                <input type="text" class="in1" placeholder="Full Name" id="username">
+            </div>
+            <div style="display: flex; width: 100%;">
+                <div>
+                    <input type="tel" id="code" class="in2" value="+1">
+                </div>
+
+                <input type="tel" class="in3" placeholder="Phone Number" id="phone1">
+            </div>
+            <div>
+                <input type="email" class="in4" placeholder="Email Address" id="email"><br>
+                <button type="submit" class="submit">Request More Details</button>
+            </div>
+        </form>
+        <script src="./build/js/intlTelInput.js"></script>
+        <script>
+            var input = document.querySelector("#code");
+            window.intlTelInput(input, {});
+        </script>
+        <script>
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyCedpVCPtTazVRVxSbE0eYD7GtfmAj2zhM",
+                authDomain: "form-2b721.firebaseapp.com",
+                projectId: "form-2b721",
+                storageBucket: "form-2b721.appspot.com",
+                messagingSenderId: "682793524735",
+                appId: "1:682793524735:web:062b4fc8508731f1109bca",
+                measurementId: "G-1Q1LL4ZP5M"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
+            // Handle form submission
+            async function handleSubmit(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Execute reCAPTCHA
+                const token = await grecaptcha.enterprise.execute('6LcOcQgqAAAAAEDLJ_AWQ7zBRYt_DokVn_SzBbq0', { action: 'submit' });
+
+                // Get form values
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const code = document.getElementById('code').value; // Access the code input value
+                const phone1 = document.getElementById('phone1').value;
+
+                // Validate phone number (only digits)
+                if (!/^\d+$/.test(phone1)) {
+                    alert('Phone number should only contain digits.');
+                    return;
+                }
+
+                // Send reCAPTCHA token and form data to server
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token: token,
+                        username: username,
+                        email: email,
+                        code: code,
+                        phone1: phone1
+                    })
+                });
+
+                if (response.ok) {
+                    // Refresh the page
+                    window.location.reload();
+                } else {
+                    alert('Failed to submit data. Please try again.');
+                }
+            }
+        </script>
+        <script>
+            // JavaScript to handle the parallax effect
+            window.addEventListener('scroll', function () {
+                const image = document.querySelector('.image');
+                const scrollPosition = window.pageYOffset;
+                image.style.backgroundPositionY = -(scrollPosition * 0.5) + 'px';
+            });
+        </script>
+
+    </div>
+</body>
+
+</html>
